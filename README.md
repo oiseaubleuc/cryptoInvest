@@ -49,7 +49,6 @@ The application will be available at `http://localhost:4200`
 
 ---
 
-## Screenshots
 
 ### Market Overview
 
@@ -75,7 +74,7 @@ This project is licensed under the MIT License.
 
 ## Author
 
-**Hamouchi Houdaifa**
+** HohoServices **
 
 - GitHub: [@oiseaubleuc](https://github.com/oiseaubleuc)
 - Project Link: [https://github.com/oiseaubleuc/cryptoInvest](https://github.com/oiseaubleuc/cryptoInvest)
