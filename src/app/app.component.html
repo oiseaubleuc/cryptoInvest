@@ -1,0 +1,23 @@
+<header>
+  <nav class="navbar">
+    <div class="container">
+      <h1>{{ title }}</h1>
+      <ul class="nav-menu">
+        <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+        <li><a routerLink="/portfolio" routerLinkActive="active">Portfolio</a></li>
+        <li><a routerLink="/market" routerLinkActive="active">Market</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2024 Crypto Invest. All rights reserved.</p>
+  </div>
+</footer>
+

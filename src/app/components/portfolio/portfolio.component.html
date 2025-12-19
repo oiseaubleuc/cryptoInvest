@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="portfolio-header fade-in">
+    <h1>My Portfolio</h1>
+    <p class="subtitle">Manage and track your cryptocurrency investments</p>
+    <button class="btn btn-primary" (click)="showAddForm = !showAddForm">
+      {{ showAddForm ? 'Cancel' : '+ Add Investment' }}
+    </button>
+  </div>
+
+  <div class="portfolio-stats fade-in" *ngIf="portfolioItems.length > 0">
+    <div class="stat-card card">
+      <div class="stat-label">Total Value</div>
+      <div class="stat-value">{{ formatCurrency(getTotalValue()) }}</div>
+    </div>
+    <div class="stat-card card">
+      <div class="stat-label">Total Investment</div>
+      <div class="stat-value">{{ formatCurrency(getTotalInvestment()) }}</div>
+    </div>
+    <div class="stat-card card" [class.profit]="getTotalProfit() > 0" [class.loss]="getTotalProfit() < 0">
+      <div class="stat-label">Profit/Loss</div>
+      <div class="stat-value">
+        {{ formatCurrency(getTotalProfit()) }}
+        <span class="percentage">({{ getTotalProfitPercentage() | number:'1.2-2' }}%)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-form card fade-in" *ngIf="showAddForm">
+    <h2>Add Investment</h2>
+    <div class="form-group">
+      <label>Cryptocurrency</label>
+      <select [(ngModel)]="selectedCrypto" class="form-input">
+        <option [ngValue]="null">Select...</option>
+        <option *ngFor="let crypto of availableCryptos" [ngValue]="crypto">
+          {{ crypto.name }} ({{ crypto.symbol.toUpperCase() }})
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Quantity</label>
+      <input type="number" [(ngModel)]="amount" class="form-input" placeholder="0.00" step="0.00000001" min="0">
+    </div>
+    <div class="form-group">
+      <label>Purchase Price (USD)</label>
+      <input type="number" [(ngModel)]="purchasePrice" class="form-input" placeholder="0.00" step="0.01" min="0">
+    </div>
+    <button class="btn btn-primary" (click)="addToPortfolio()" [disabled]="!selectedCrypto || amount <= 0 || purchasePrice <= 0">
+      Add to Portfolio
+    </button>
+  </div>
+
+  <div class="portfolio-list" *ngIf="portfolioItems.length > 0; else emptyPortfolio">
+    <div class="portfolio-item card fade-in" *ngFor="let item of portfolioItems; let i = index">
+      <div class="item-header">
+        <div class="crypto-info">
+          <img [src]="item.crypto.image" [alt]="item.crypto.name" class="crypto-icon">
+          <div>
+            <h3>{{ item.crypto.name }}</h3>
+            <span class="crypto-symbol">{{ item.crypto.symbol.toUpperCase() }}</span>
+          </div>
+        </div>
+        <button class="btn-remove" (click)="removeFromPortfolio(i)">×</button>
+      </div>
+      
+      <div class="item-details">
+        <div class="detail-row">
+          <span class="label">Quantity:</span>
+          <span class="value">{{ item.amount }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Current Price:</span>
+          <span class="value">${{ item.crypto.current_price | number:'1.2-2' }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Purchase Price:</span>
+          <span class="value">${{ item.purchasePrice | number:'1.2-2' }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Current Value:</span>
+          <span class="value">{{ formatCurrency(item.crypto.current_price * item.amount) }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Profit/Loss:</span>
+          <span class="value" [class.profit]="getItemProfit(item) > 0" [class.loss]="getItemProfit(item) < 0">
+            {{ formatCurrency(getItemProfit(item)) }}
+            ({{ getItemProfitPercentage(item) | number:'1.2-2' }}%)
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyPortfolio>
+    <div class="empty-portfolio card fade-in">
+      <div class="empty-icon"></div>
+      <h2>Your Portfolio is Empty</h2>
+      <p>Start by adding your first investment</p>
+      <button class="btn btn-primary" (click)="showAddForm = true">Add Investment</button>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="market-header fade-in">
+    <h1>Cryptocurrency Market</h1>
+    <p class="subtitle">Real-time prices for over 10,000 cryptocurrencies</p>
+    
+    <div class="search-bar">
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery" 
+        placeholder="Search for a cryptocurrency..."
+        class="search-input"
+      >
+      <span class="search-icon">SEARCH</span>
+    </div>
+  </div>
+
+  <div class="market-stats fade-in">
+    <div class="stat-box">
+      <div class="stat-label">Total Cryptocurrencies</div>
+      <div class="stat-value">{{ cryptos.length }}</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Total Market Cap</div>
+      <div class="stat-value">{{ getTotalMarketCap() }}</div>
+    </div>
+  </div>
+
+  <div class="crypto-table-container card" *ngIf="!loading; else loadingTemplate">
+    <table class="crypto-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Cryptocurrency</th>
+          <th>Price</th>
+          <th>24h Change</th>
+          <th>Market Cap</th>
+          <th>24h Volume</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let crypto of filteredCryptos" class="crypto-row">
+          <td class="rank">{{ crypto.market_cap_rank }}</td>
+          <td class="crypto-info">
+            <img [src]="crypto.image" [alt]="crypto.name" class="crypto-icon-small">
+            <div>
+              <div class="crypto-name">{{ crypto.name }}</div>
+              <div class="crypto-symbol">{{ crypto.symbol.toUpperCase() }}</div>
+            </div>
+          </td>
+          <td class="price">${{ formatPrice(crypto.current_price) }}</td>
+          <td>
+            <span class="price-change" 
+                  [class.positive]="crypto.price_change_percentage_24h > 0"
+                  [class.negative]="crypto.price_change_percentage_24h < 0">
+              {{ crypto.price_change_percentage_24h > 0 ? '↑' : '↓' }}
+              {{ crypto.price_change_percentage_24h | number:'1.2-2' }}%
+            </span>
+          </td>
+          <td class="market-cap">{{ formatMarketCap(crypto.market_cap) }}</td>
+          <td class="volume">{{ formatMarketCap(crypto.total_volume) }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div *ngIf="filteredCryptos.length === 0" class="no-results">
+      <p>No cryptocurrency found for "{{ searchQuery }}"</p>
+    </div>
+  </div>
+
+  <ng-template #loadingTemplate>
+    <div class="loading-container">
+      <div class="skeleton-card card" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text"></div>
+      </div>
+    </div>
+  </ng-template>
+</div>

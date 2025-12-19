@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="hero fade-in">
+    <h1 class="hero-title">
+      <span class="gradient-text">Welcome to Crypto Invest</span>
+    </h1>
+    <p class="hero-subtitle">Manage your cryptocurrency investments with style and precision</p>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-value">10,000+</div>
+        <div class="stat-label">Cryptocurrencies</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">$2.5T</div>
+        <div class="stat-label">Total Market Cap</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">24/7</div>
+        <div class="stat-label">Active Market</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features slide-in">
+    <div class="feature-card card-gradient">
+      <h2>Smart Portfolio</h2>
+      <p>Track your investments in real-time and visualize your performance with detailed charts</p>
+      <a routerLink="/portfolio" class="btn btn-primary">View My Portfolio</a>
+    </div>
+
+    <div class="feature-card" style="background: var(--gradient-3);">
+      <h2>Live Market</h2>
+      <p>Check real-time prices of all cryptocurrencies with accurate and up-to-date data</p>
+      <a routerLink="/market" class="btn" style="background: white; color: #4facfe;">View Market</a>
+    </div>
+  </div>
+
+  <div class="trending-section slide-in">
+    <h2 class="section-title">Trending Cryptocurrencies</h2>
+    <div class="trending-grid" *ngIf="trendingCryptos.length > 0; else loading">
+      <div class="trending-card card" *ngFor="let crypto of trendingCryptos.slice(0, 6)">
+        <div class="trending-header">
+          <img [src]="crypto.image" [alt]="crypto.name" class="crypto-icon">
+          <div class="trending-info">
+            <h3>{{ crypto.name }}</h3>
+            <span class="crypto-symbol">{{ crypto.symbol.toUpperCase() }}</span>
+          </div>
+        </div>
+        <div class="trending-price">
+          <div class="price">${{ crypto.current_price | number:'1.2-2' }}</div>
+          <div class="price-change" [class.positive]="crypto.price_change_percentage_24h > 0" 
+               [class.negative]="crypto.price_change_percentage_24h < 0">
+            {{ crypto.price_change_percentage_24h > 0 ? '↑' : '↓' }} 
+            {{ crypto.price_change_percentage_24h | number:'1.2-2' }}%
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #loading>
+      <div class="trending-grid">
+        <div class="trending-card card skeleton" *ngFor="let i of [1,2,3,4,5,6]" style="height: 120px;"></div>
+      </div>
+    </ng-template>
+  </div>
+</div>

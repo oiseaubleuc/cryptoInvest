@@ -1,0 +1,342 @@
+.portfolio-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 2px solid var(--kaki);
+}
+
+.portfolio-header h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: 1rem;
+  color: var(--white);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 1rem;
+}
+
+.portfolio-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: var(--kaki);
+  box-shadow: 0 0 20px var(--kaki-glow);
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
+.portfolio-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 2rem;
+  border: 2px solid var(--border-color);
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--kaki);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+.stat-card:hover {
+  border-color: var(--kaki);
+  box-shadow: var(--shadow-kaki);
+  transform: translateY(-4px);
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--white);
+  font-family: 'Courier New', monospace;
+}
+
+.stat-card.profit .stat-value {
+  color: var(--kaki);
+  text-shadow: 0 0 10px var(--kaki-glow);
+}
+
+.stat-card.loss .stat-value {
+  color: #ff4444;
+}
+
+.percentage {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  color: var(--text-muted);
+}
+
+.add-form {
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid var(--kaki);
+  position: relative;
+}
+
+.add-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--kaki);
+}
+
+.add-form h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--kaki);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 16px;
+  transition: all 0.4s ease;
+  font-family: 'Courier New', monospace;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--kaki);
+  box-shadow: 0 0 20px var(--kaki-glow);
+  background: var(--bg-secondary);
+}
+
+.portfolio-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.portfolio-item {
+  padding: 1.5rem;
+  border: 2px solid var(--border-color);
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.portfolio-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--kaki);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.portfolio-item:hover {
+  border-color: var(--kaki);
+  box-shadow: var(--shadow-kaki);
+  transform: translateY(-4px);
+}
+
+.portfolio-item:hover::before {
+  opacity: 1;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.crypto-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.crypto-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  object-fit: cover;
+  border: 2px solid var(--kaki);
+  padding: 2px;
+}
+
+.crypto-info h3 {
+  margin-bottom: 0.25rem;
+  font-size: 1.25rem;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.crypto-symbol {
+  color: var(--kaki);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.btn-remove {
+  background: transparent;
+  color: #ff4444;
+  border: 2px solid #ff4444;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.btn-remove:hover {
+  background: #ff4444;
+  color: var(--white);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+}
+
+.item-details {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row .label {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.detail-row .value {
+  font-weight: 700;
+  color: var(--white);
+  font-family: 'Courier New', monospace;
+}
+
+.detail-row .value.profit {
+  color: var(--kaki);
+  text-shadow: 0 0 10px var(--kaki-glow);
+}
+
+.detail-row .value.loss {
+  color: #ff4444;
+}
+
+.empty-portfolio {
+  text-align: center;
+  padding: 4rem 2rem;
+  border: 2px dashed var(--border-color);
+}
+
+.empty-icon {
+  display: none;
+}
+
+.empty-portfolio h2 {
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.empty-portfolio p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .portfolio-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
