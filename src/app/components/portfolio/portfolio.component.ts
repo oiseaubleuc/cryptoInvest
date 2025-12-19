@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { CryptoService } from '../../services/crypto.service';
+import { CurrencyService } from '../../services/currency.service';
 import { CryptoCurrency } from '../../models/crypto.model';
 
 interface PortfolioItem {
@@ -26,12 +28,25 @@ export class PortfolioComponent implements OnInit {
   purchasePrice: number = 0;
   showAddForm = false;
   loading = false;
+  private currencySubscription?: Subscription;
 
-  constructor(private cryptoService: CryptoService) {}
+  constructor(
+    private cryptoService: CryptoService,
+    private currencyService: CurrencyService
+  ) {}
 
   ngOnInit() {
     this.loadPortfolio();
     this.loadAvailableCryptos();
+    
+    // Reload data when currency changes
+    this.currencySubscription = this.currencyService.currentCurrency$.subscribe(() => {
+      this.loadAvailableCryptos();
+    });
+  }
+
+  ngOnDestroy() {
+    this.currencySubscription?.unsubscribe();
   }
 
   loadPortfolio() {
@@ -47,13 +62,20 @@ export class PortfolioComponent implements OnInit {
 
   loadAvailableCryptos() {
     this.loading = true;
-    this.cryptoService.getTopCryptos(50).subscribe({
+    const currency = this.currencyService.getCurrentCurrency();
+    
+    this.cryptoService.getTopCryptos(50, currency).subscribe({
       next: (data) => {
-        this.availableCryptos = data;
+        if (data && Array.isArray(data)) {
+          this.availableCryptos = data;
+        } else {
+          this.availableCryptos = [];
+        }
         this.loading = false;
       },
       error: (error) => {
         console.error('Error:', error);
+        this.availableCryptos = [];
         this.loading = false;
       }
     });
@@ -120,6 +142,11 @@ export class PortfolioComponent implements OnInit {
   }
 
   formatCurrency(value: number): string {
-    return '$' + value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const symbol = this.currencyService.getCurrencySymbol();
+    return symbol + value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  getCurrencySymbol(): string {
+    return this.currencyService.getCurrencySymbol();
   }
 }

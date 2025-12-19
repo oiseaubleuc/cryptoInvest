@@ -26,7 +26,7 @@
   </div>
 
   <div class="crypto-table-container card" *ngIf="!loading; else loadingTemplate">
-    <table class="crypto-table">
+    <table class="crypto-table" *ngIf="filteredCryptos.length > 0">
       <thead>
         <tr>
           <th>#</th>
@@ -47,7 +47,7 @@
               <div class="crypto-symbol">{{ crypto.symbol.toUpperCase() }}</div>
             </div>
           </td>
-          <td class="price">${{ formatPrice(crypto.current_price) }}</td>
+          <td class="price">{{ formatPrice(crypto.current_price) }}</td>
           <td>
             <span class="price-change" 
                   [class.positive]="crypto.price_change_percentage_24h > 0"
@@ -62,8 +62,12 @@
       </tbody>
     </table>
     
-    <div *ngIf="filteredCryptos.length === 0" class="no-results">
+    <div *ngIf="filteredCryptos.length === 0 && !loading && searchQuery" class="no-results">
       <p>No cryptocurrency found for "{{ searchQuery }}"</p>
+    </div>
+    
+    <div *ngIf="filteredCryptos.length === 0 && !loading && !searchQuery && cryptos.length === 0" class="no-results">
+      <p>No cryptocurrency data available. Please check your connection or try again later.</p>
     </div>
   </div>
 

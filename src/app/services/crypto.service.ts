@@ -14,9 +14,9 @@ export class CryptoService {
   /**
    * Get top cryptocurrencies
    */
-  getTopCryptos(limit: number = 100): Observable<CryptoCurrency[]> {
+  getTopCryptos(limit: number = 100, currency: string = 'usd'): Observable<CryptoCurrency[]> {
     const params = new HttpParams()
-      .set('vs_currency', 'usd')
+      .set('vs_currency', currency)
       .set('order', 'market_cap_desc')
       .set('per_page', limit.toString())
       .set('page', '1')
@@ -36,9 +36,9 @@ export class CryptoService {
   /**
    * Get cryptocurrency price history
    */
-  getCryptoPriceHistory(id: string, days: number = 7): Observable<CryptoPriceHistory> {
+  getCryptoPriceHistory(id: string, days: number = 7, currency: string = 'usd'): Observable<CryptoPriceHistory> {
     const params = new HttpParams()
-      .set('vs_currency', 'usd')
+      .set('vs_currency', currency)
       .set('days', days.toString());
 
     return this.http.get<CryptoPriceHistory>(`${this.apiUrl}/coins/${id}/market_chart`, { params });

@@ -69,11 +69,11 @@
         </div>
         <div class="detail-row">
           <span class="label">Current Price:</span>
-          <span class="value">${{ item.crypto.current_price | number:'1.2-2' }}</span>
+          <span class="value">{{ getCurrencySymbol() }}{{ item.crypto.current_price | number:'1.2-2' }}</span>
         </div>
         <div class="detail-row">
           <span class="label">Purchase Price:</span>
-          <span class="value">${{ item.purchasePrice | number:'1.2-2' }}</span>
+          <span class="value">{{ getCurrencySymbol() }}{{ item.purchasePrice | number:'1.2-2' }}</span>
         </div>
         <div class="detail-row">
           <span class="label">Current Value:</span>

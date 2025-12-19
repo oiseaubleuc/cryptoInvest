@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { CryptoService } from '../../services/crypto.service';
+import { CurrencyService } from '../../services/currency.service';
 import { CryptoCurrency } from '../../models/crypto.model';
 
 @Component({
@@ -11,26 +13,46 @@ import { CryptoCurrency } from '../../models/crypto.model';
   templateUrl: './market.component.html',
   styleUrl: './market.component.css'
 })
-export class MarketComponent implements OnInit {
+export class MarketComponent implements OnInit, OnDestroy {
   cryptos: CryptoCurrency[] = [];
   loading = true;
   searchQuery = '';
+  private currencySubscription?: Subscription;
 
-  constructor(private cryptoService: CryptoService) {}
+  constructor(
+    private cryptoService: CryptoService,
+    private currencyService: CurrencyService
+  ) {}
 
   ngOnInit() {
     this.loadCryptos();
+    
+    // Reload data when currency changes
+    this.currencySubscription = this.currencyService.currentCurrency$.subscribe(() => {
+      this.loadCryptos();
+    });
+  }
+
+  ngOnDestroy() {
+    this.currencySubscription?.unsubscribe();
   }
 
   loadCryptos() {
     this.loading = true;
-    this.cryptoService.getTopCryptos(100).subscribe({
+    const currency = this.currencyService.getCurrentCurrency();
+    
+    this.cryptoService.getTopCryptos(100, currency).subscribe({
       next: (data) => {
-        this.cryptos = data;
+        if (data && Array.isArray(data)) {
+          this.cryptos = data;
+        } else {
+          this.cryptos = [];
+        }
         this.loading = false;
       },
       error: (error) => {
         console.error('Error loading cryptocurrencies:', error);
+        this.cryptos = [];
         this.loading = false;
       }
     });
@@ -47,23 +69,29 @@ export class MarketComponent implements OnInit {
   }
 
   formatPrice(price: number): string {
+    const symbol = this.currencyService.getCurrencySymbol();
     if (price < 0.01) {
-      return price.toFixed(6);
+      return symbol + price.toFixed(6);
     }
-    return price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return symbol + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   formatMarketCap(marketCap: number): string {
+    const symbol = this.currencyService.getCurrencySymbol();
     if (marketCap >= 1e12) {
-      return '$' + (marketCap / 1e12).toFixed(2) + 'T';
+      return symbol + (marketCap / 1e12).toFixed(2) + 'T';
     }
     if (marketCap >= 1e9) {
-      return '$' + (marketCap / 1e9).toFixed(2) + 'B';
+      return symbol + (marketCap / 1e9).toFixed(2) + 'B';
     }
     if (marketCap >= 1e6) {
-      return '$' + (marketCap / 1e6).toFixed(2) + 'M';
+      return symbol + (marketCap / 1e6).toFixed(2) + 'M';
     }
-    return '$' + marketCap.toLocaleString('en-US');
+    return symbol + marketCap.toLocaleString('en-US');
+  }
+
+  getCurrencySymbol(): string {
+    return this.currencyService.getCurrencySymbol();
   }
 
   getTotalMarketCap(): string {

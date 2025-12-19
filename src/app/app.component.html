@@ -6,6 +6,21 @@
         <li><a routerLink="/" routerLinkActive="active">Home</a></li>
         <li><a routerLink="/portfolio" routerLinkActive="active">Portfolio</a></li>
         <li><a routerLink="/market" routerLinkActive="active">Market</a></li>
+        <li class="currency-selector">
+          <div class="currency-dropdown" (click)="showCurrencyDropdown = !showCurrencyDropdown">
+            <span class="currency-display">{{ getCurrencySymbol() }} {{ selectedCurrency.toUpperCase() }}</span>
+            <span class="currency-arrow">▼</span>
+          </div>
+          <ul class="currency-menu" *ngIf="showCurrencyDropdown">
+            <li *ngFor="let currency of availableCurrencies" 
+                (click)="onCurrencyChange(currency.code)"
+                [class.active]="selectedCurrency === currency.code">
+              <span class="currency-symbol">{{ currency.symbol }}</span>
+              <span class="currency-name">{{ currency.name }}</span>
+              <span class="currency-code">{{ currency.code.toUpperCase() }}</span>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
   </nav>
