@@ -1,16 +1,14 @@
-# Crypto Invest
+<h1 align="center">Crypto Invest</h1>
+<p align="center">
+  <b>Cryptocurrency portfolio and market tracker</b><br/>
+  Real-time prices for 10,000+ coins, portfolio tracking with automatic profit / loss and multi-currency support.
+</p>
 
-<div align="center">
-
-**A Professional Cryptocurrency Investment Management Platform**
-
-[![Angular](https://img.shields.io/badge/Angular-17.0-red.svg)](https://angular.io/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue.svg)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
-*Real-time cryptocurrency tracking, portfolio management, and market analysis*
-
-</div>
+<p align="center">
+  <img src="https://img.shields.io/badge/Angular-17-DD0031?style=flat-square&logo=angular&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/RxJS-reactive-B7178C?style=flat-square&logo=reactivex&logoColor=white" />
+</p>
 
 ---
 
@@ -78,3 +76,7 @@ This project is licensed under the MIT License.
 
 - GitHub: [@oiseaubleuc](https://github.com/oiseaubleuc)
 - Project Link: [https://github.com/oiseaubleuc/cryptoInvest](https://github.com/oiseaubleuc/cryptoInvest)
+
+---
+
+<p align="center">Built by <a href="https://github.com/oiseaubleuc">Hoho</a> · Belgium</p>
